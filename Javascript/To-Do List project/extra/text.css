@@ -1,0 +1,121 @@
+.addTask {
+    height: 30px;
+    width: 150px;
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
+    border: none;
+    padding-top: 2px;
+color: aliceblue;
+background-color: blue;
+font-size: large;
+}
+
+.clrAll {
+    height: 30px;
+    width: 150px;
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
+    border: none;
+    padding-top: 2px;
+color: aliceblue;
+background-color: rgb(186, 25, 25);
+font-size: large;
+}
+
+.update {
+    height: 30px;
+    width: 150px;
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
+    border: none;
+    padding-top: 2px;
+/* color: aliceblue; */
+background-color: gold;
+font-size: large;
+}
+
+.delete{
+    height: 30px;
+    width: 100px;
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
+    border: none;
+    padding-top: 2px;
+    background-color: rgb(217, 83, 34);
+    font-size: large;
+}
+
+.done-undone{
+    height: 30px;
+    width: 150px;
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
+    border: none;
+    padding-top: 2px;
+    background-color: greenyellow;
+    font-size: large;
+}
+
+.update2{
+    height: 30px;
+    width: 100px;
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
+    border: none;
+    padding-top: 2px;
+    background-color: gold;
+    font-size: large;
+}
+
+.input{
+    margin-right: 20px;
+    border-radius: 13px;
+    border: none;
+    height: 30px;
+    width: 300px;
+    padding-inline: 10px;
+    font-size: large;
+}
+
+.input-date{
+    margin-right: 20px;
+    border-radius: 13px;
+    border: none;
+    height: 30px;
+    width: 200px;
+    padding-inline: 10px;
+    font-size: large;
+}
+
+.input-time{
+    margin-right: 20px;
+    border-radius: 13px;
+    border: none;
+    height: 30px;
+    width: 150px;
+    padding-inline: 10px;
+    font-size: large;
+}
+
+.dropdown{
+    margin-right: 25px;
+    border-radius: 13px;
+    border: none;
+    height: 30px;
+    width: 150px;
+    padding-inline: 10px;
+    font-size: large;
+}
+
