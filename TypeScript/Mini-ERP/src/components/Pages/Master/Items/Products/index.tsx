@@ -32,7 +32,7 @@ export default function ProductsPage() {
         </div>
         <br />
 
-        <Button>Add item</Button>
+        <Button>Create Product</Button>
       </div>{" "}
     </div>
   );

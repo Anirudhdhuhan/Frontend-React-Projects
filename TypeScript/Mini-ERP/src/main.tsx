@@ -13,23 +13,31 @@ function Root() {
       path: "/",
       element: <App />,
       children: [
-       {
-        index: true,
-        element: <Navigate to="/Orders" replace />
-       },  {
+        {
+          index: true,
+          element: <Navigate to="/Orders" replace />,
+        },
+        {
           path: "/detail",
           element: <p>Detail</p>,
         },
         {
           path: "/Customer",
           element: <CustomerPage />,
-        }, {
+        },
+        {
           path: "/Orders",
-          element: <p className='text-7xl text-blue-500 bg-yellow-500 p-4 text-center rounded pt-1'>This is Orders Page</p>,
-        }, {
+          element: (
+            <p className="text-7xl text-blue-500 bg-yellow-500 p-4 text-center rounded pt-1">
+              This is Orders Page
+            </p>
+          ),
+        },
+        {
           path: "/Products",
           element: <ProductsPage />,
-        }, {
+        },
+        {
           path: "/Services",
           element: <ServicesPage />,
         },

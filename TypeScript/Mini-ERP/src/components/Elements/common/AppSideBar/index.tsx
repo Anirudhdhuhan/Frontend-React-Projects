@@ -16,10 +16,6 @@ import {
 import { Boxes, UserCog, Layers, User, Receipt, Tag, Wrench, Plus, LayoutList } from "lucide-react";
 import { Collapsible,CollapsibleTrigger, CollapsibleContent } from "@radix-ui/react-collapsible";
 import { Link } from "react-router";
-// const items = [
-//   { title: "Master", url: "#", icon: UserCog },
-//   { title: "Orders", url: "#", icon: Boxes },
-// ];
 
 export default function AppSideBar() {
   return (
@@ -110,19 +106,7 @@ export default function AppSideBar() {
   </Collapsible>
 </SidebarMenu>
 
-{/* 
-                <SidebarMenu>
-                  {items.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
-                        <a href={item.url} className="ml-4">
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </a>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu> */}
+
 
 
               </SidebarGroupContent>

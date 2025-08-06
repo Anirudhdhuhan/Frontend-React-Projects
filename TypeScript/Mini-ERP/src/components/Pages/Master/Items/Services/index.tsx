@@ -30,7 +30,7 @@ export default function ServicesPage() {
         </div>
         <br />
 
-        <Button>Add item</Button>
+        <Button>Create Service</Button>
       </div>
     </div>
   )
