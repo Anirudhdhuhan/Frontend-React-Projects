@@ -49,7 +49,6 @@ export default function AppSideBar() {
       </CollapsibleTrigger>
       <CollapsibleContent>
         <SidebarMenuSub>
-        <SidebarMenuSubItem > <Link to={"/"}><p className="flex"> <Tag className="h-4 "/> Orders Page</p></Link>  </SidebarMenuSubItem>
           <SidebarMenuSubItem > <Link to={"/Products"}><p className="text-rose-500 flex"> <Tag className="h-4 "/> Products</p></Link>  </SidebarMenuSubItem>
           <SidebarMenuSubItem > <Link to={"/Services"}><p className="text-indigo-500 flex"><Wrench className="h-5"/> Services</p></Link>   </SidebarMenuSubItem>
         </SidebarMenuSub>
@@ -87,8 +86,8 @@ export default function AppSideBar() {
       </CollapsibleTrigger>
       <CollapsibleContent>
         <SidebarMenuSub>
-          <SidebarMenuSubItem > <p className="text-green-600 flex"> <Plus className="h-5"/>  Create</p></SidebarMenuSubItem>
-          <SidebarMenuSubItem > <p className="text-amber-500 flex"> <LayoutList className="h-4 mt-[2px]"/>  List</p></SidebarMenuSubItem>
+          <SidebarMenuSubItem > <Link to={"/Orders/Create"}><p className="text-green-600 flex"> <Plus className="h-5"/>  Create</p></Link> </SidebarMenuSubItem>
+          <SidebarMenuSubItem > <Link to={"/Orders"}> <p className="text-amber-500 flex"> <LayoutList className="h-4 mt-[2px]"/>  List</p></Link></SidebarMenuSubItem>
         </SidebarMenuSub>
       </CollapsibleContent>
     </SidebarMenuItem>

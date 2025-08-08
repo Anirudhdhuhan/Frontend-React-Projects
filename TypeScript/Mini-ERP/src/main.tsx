@@ -3,9 +3,14 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import CustomerPage from "./components/Pages/Master/Customer/index.tsx";
-import ProductsPage from "./components/Pages/Master/Items/Products/index.tsx";
-import ServicesPage from "./components/Pages/Master/Items/Services/index.tsx";
+import CreateCustomerPage from "./components/Pages/Master/Customer/Create Customers/index.tsx";
+import CreateProductsPage from "./components/Pages/Master/Items/Products/Create/index.tsx";
+import CreateServicesPage from "./components/Pages/Master/Items/Services/Create/index.tsx";
+import CustomersList from "./components/Pages/Master/Customer/List/index.tsx";
+import ProductsList from "./components/Pages/Master/Items/Products/List/index.tsx";
+import ServicesList from "./components/Pages/Master/Items/Services/List/index.tsx";
+import OrdersList from "./components/Pages/Orders/List/index.tsx";
+import CreateOrder from "./components/Pages/Orders/Create/index.tsx";
 
 function Root() {
   const router = createBrowserRouter([
@@ -23,23 +28,35 @@ function Root() {
         },
         {
           path: "/Customer",
-          element: <CustomerPage />,
+          element: <CustomersList />,
+        },
+        {
+          path: "/Customer/Create",
+          element: <CreateCustomerPage />,
         },
         {
           path: "/Orders",
-          element: (
-            <p className="text-7xl text-blue-500 bg-yellow-500 p-4 text-center rounded pt-1">
-              This is Orders Page
-            </p>
-          ),
+          element: <OrdersList />,
+        },
+        {
+          path: "/Orders/Create",
+          element: <CreateOrder />,
         },
         {
           path: "/Products",
-          element: <ProductsPage />,
+          element: <ProductsList />,
+        },
+        {
+          path: "/Products/Create",
+          element: <CreateProductsPage />,
         },
         {
           path: "/Services",
-          element: <ServicesPage />,
+          element: <ServicesList />,
+        },
+        {
+          path: "/Services/Create",
+          element: <CreateServicesPage />,
         },
       ],
     },
