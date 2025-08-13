@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { ArrowUpDown } from "lucide-react";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+import { DataTableDemo } from "@/components/Elements/common/data-table/data-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 type CustomerType = {
   CustomerName: string;
@@ -16,7 +19,77 @@ type CustomerType = {
   Address: string;
   GST: number;
   PaymentTerms: string;
-};
+}; 
+
+const columns: ColumnDef<CustomerType>[] = [
+  {
+    accessorKey: "CustomerName",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Customer Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
+    accessorKey: "Code",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+         Code
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  }, {
+    accessorKey: "Address",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Address
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },{
+    accessorKey: "GST",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          GST
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },{
+    accessorKey: "PaymentTerms",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          payment Terms
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  }
+]
 
 export default function CustomersList() {
   const [customerData, setCustomerData] = useState<CustomerType[]>([]);
@@ -44,8 +117,8 @@ export default function CustomersList() {
           Customers List
         </h3>
       )}
-
-      <Table>
+<DataTableDemo data={customerData} columns={columns}/>
+      {/* <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Customer Name</TableHead>
@@ -55,25 +128,18 @@ export default function CustomersList() {
             <TableHead>Payment Terms</TableHead>
           </TableRow>
         </TableHeader>
-        {customerData.map((customer) => (
           <TableBody>
+        {customerData.map((customer) => (
             <TableRow>
-              <TableCell className="font-medium">
-                {customer.CustomerName}
-              </TableCell>
-              <TableCell>
-                <span className="ml-8" /> {customer.Code}
-              </TableCell>
+              <TableCell className="font-medium">{customer.CustomerName}</TableCell>
+              <TableCell><span className="ml-8" /> {customer.Code}</TableCell>
               <TableCell>{customer.Address}</TableCell>
-              <TableCell>
-                {" "}
-                <span className="ml-8" /> {customer.GST}
-              </TableCell>
+              <TableCell><span className="ml-8" /> {customer.GST}</TableCell>
               <TableCell>{customer.PaymentTerms}</TableCell>
             </TableRow>
-          </TableBody>
         ))}
-      </Table>
+        </TableBody>
+      </Table> */}
     </div>
   );
 }

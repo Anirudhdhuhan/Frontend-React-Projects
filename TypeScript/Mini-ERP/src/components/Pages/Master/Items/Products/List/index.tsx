@@ -1,7 +1,8 @@
 import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { DataTableDemo } from "@/components/Pages/Master/Items/Products/List/data-table";
+import { DataTableDemo } from "@/components/Elements/common/data-table/data-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 type ProductType = {
   Product: string;
@@ -13,6 +14,42 @@ type ProductType = {
   StockNo: number;
   GST: number;
 };
+
+
+    const columns: ColumnDef<ProductType>[] = [
+  {
+    accessorKey: "Product",
+    header: "Product"
+  },
+  {
+    accessorKey: "ID",
+    header: "ID"
+  },
+  {
+    accessorKey: "Price" ,
+    header: "Price"
+  },
+  {
+    accessorKey: "Quantity" ,
+    header: "Quantity"
+  },
+  {
+    accessorKey: "HSNCode",
+    header: "HSNCode"
+  },
+  {
+    accessorKey: "Description",
+    header: "Description"
+  },
+  {
+    accessorKey: "StockNo",
+    header: "StockNo"
+  },
+  {
+    accessorKey: "GST",
+    header: "GST"
+  },
+]
 
 export default function ProductsList() {
   const [productsData, setProductsData] = useState<ProductType[]>([]);
@@ -39,7 +76,7 @@ useEffect(getProductsData,[])
             Products List
           </h3>
         )}
-
+{/* 
         {productsData.map(product => ( <div className="mb-6 flex gap-6 border border-black py-3 px-5 w-fit rounded">
             <div>Product:- {product.Product}</div>
             <div>ID:- {product.ID}</div>
@@ -49,11 +86,12 @@ useEffect(getProductsData,[])
             <div>GST:- {product.GST}</div>
             <div>Description:- {product.Description}</div>
             <div>Stock Number:- {product.StockNo}</div>
-          </div>))}
+          </div>))} */}
       </div>
       <div>
 
-      <DataTableDemo/>
+      <DataTableDemo columns={columns} data={productsData}/>
+
       </div>
     </div>
   );

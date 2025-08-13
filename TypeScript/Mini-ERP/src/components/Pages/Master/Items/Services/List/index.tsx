@@ -1,6 +1,8 @@
+import { DataTableDemo } from "@/components/Elements/common/data-table/data-table";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import type { ColumnDef } from "@tanstack/react-table";
 
 type ServiceType = {
   Service: string;
@@ -12,6 +14,34 @@ type ServiceType = {
   StockNo: number;
   GST: number;
 };
+
+const columns : ColumnDef<ServiceType>[] = [
+  {
+accessorKey: "Service",
+header: "Service"
+}, {
+  accessorKey: "ID",
+  header: "ID"
+}, {
+  accessorKey: "Price",
+  header: "Price"
+}, {
+  accessorKey: "Quantity",
+  header: "Quantity"
+}, {
+  accessorKey: "HSNCode",
+  header: "HSN Code"
+}, {
+  accessorKey: "Description",
+  header: "Description"
+}, {
+  accessorKey: "StockNo",
+  header: "Stock Number"
+}, {
+  accessorKey: "GST",
+  header: "GST"
+}
+]
 
 export default function ServicesList() {
   const [serviceData, setServiceData] = useState<ServiceType[]>([]);
@@ -38,7 +68,7 @@ export default function ServicesList() {
             Services List
           </h3>
         )}
-        {serviceData.map((service) => (
+        {/* {serviceData.map((service) => (
         <div className="mb-6 flex gap-6 border border-black py-3 px-5 w-fit rounded">
             <div>Service:- {service.Service}</div>
             <div>ID:- {service.ID}</div>
@@ -49,7 +79,9 @@ export default function ServicesList() {
             <div>Description:- {service.Description}</div>
             <div>Stock Number:- {service.StockNo}</div>
           </div>
-        ))}
+        ))} */}
+
+        <DataTableDemo data={serviceData} columns={columns} />
       </div>
     </div>
   );
