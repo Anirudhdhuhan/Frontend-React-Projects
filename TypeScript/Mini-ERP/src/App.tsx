@@ -1,20 +1,24 @@
 import { Outlet } from "react-router";
 import AppSideBar from "./components/Elements/common/AppSideBar";
+import { ThemeProvider } from "./components/Elements/common/Dark Theme/theme-provider";
 
 function App() {
   return (
-    <div className="flex h-screen w-auto">
-    {/* Sidebar on the left */}
-    <div> 
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <div className="flex h-screen w-full">
+        {/* Sidebar on the left */}
+        <div>
+          <div>
+            <AppSideBar />
+          </div>
+        </div>
 
-    <AppSideBar />
-    </div>
-
-    {/* Main content on the right */}
-    <main className="flex-1 overflow-auto p-4 ml-6">
-      <Outlet />
-    </main>
-  </div>
+        {/* Main content on the right */}
+        <main className="flex-1 overflow-auto p-4  bg-gray-400">
+          <Outlet />
+        </main>
+      </div>
+    </ThemeProvider>
   );
 }
 

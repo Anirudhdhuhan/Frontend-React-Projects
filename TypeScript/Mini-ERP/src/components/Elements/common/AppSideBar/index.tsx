@@ -16,6 +16,7 @@ import {
 import { Boxes, UserCog, Layers, User, Receipt, Tag, Wrench, Plus, LayoutList } from "lucide-react";
 import { Collapsible,CollapsibleTrigger, CollapsibleContent } from "@radix-ui/react-collapsible";
 import { Link } from "react-router";
+import { ModeToggle } from "../Dark Theme/mode-toggle";
 
 export default function AppSideBar() {
   return (
@@ -25,8 +26,8 @@ export default function AppSideBar() {
         <Sidebar>
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel className="mb-5 ml-2">
-                Sidebar
+              <SidebarGroupLabel className="mb-5 mt-2">
+            <ModeToggle />  <span className="mr-5"></span> Sidebar
               </SidebarGroupLabel>
               <SidebarGroupContent>
 
@@ -113,8 +114,8 @@ export default function AppSideBar() {
           </SidebarContent>
         </Sidebar>
 
+        <SidebarTrigger className="absolute top-4 -right-4 z-50 bg-gray-200 rounded-full shadow p-4" />
       
-        <SidebarTrigger className="absolute top-4 -right-8 z-50 bg-gray-200 rounded-full shadow p-2" />
       </div>
     </SidebarProvider>
   );
