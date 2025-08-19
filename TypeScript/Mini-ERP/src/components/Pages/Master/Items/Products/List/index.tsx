@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { DataTableDemo } from "@/components/Elements/common/data-table/data-table";
 import type { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type ProductType = {
   Product: string;
@@ -17,37 +19,155 @@ type ProductType = {
 
 
     const columns: ColumnDef<ProductType>[] = [
+      {
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && "indeterminate")
+            }
+            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+            aria-label="Select all"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+      },
   {
     accessorKey: "Product",
-    header: "Product"
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Product
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "ID",
-    header: "ID"
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          ID
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "Price" ,
-    header: "Price"
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Price
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "Quantity" ,
-    header: "Quantity"
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Quantity
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "HSNCode",
-    header: "HSNCode"
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          HSNCode
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "Description",
-    header: "Description"
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Description
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "StockNo",
-    header: "StockNo"
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          StockNo
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "GST",
-    header: "GST"
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          GST
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
   },
 ]
 
@@ -90,7 +210,7 @@ useEffect(getProductsData,[])
       </div>
       <div>
 
-      <DataTableDemo columns={columns} data={productsData}/>
+      <DataTableDemo columns={columns} data={productsData} filterName="Product"/>
 
       </div>
     </div>

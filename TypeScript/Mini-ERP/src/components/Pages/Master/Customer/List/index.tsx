@@ -1,17 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
-import { ArrowUpDown } from "lucide-react";
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table";
+import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { DataTableDemo } from "@/components/Elements/common/data-table/data-table";
 import type { ColumnDef } from "@tanstack/react-table";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type CustomerType = {
   CustomerName: string;
@@ -19,9 +12,31 @@ type CustomerType = {
   Address: string;
   GST: number;
   PaymentTerms: string;
-}; 
+};
 
 const columns: ColumnDef<CustomerType>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "CustomerName",
     header: ({ column }) => {
@@ -31,9 +46,11 @@ const columns: ColumnDef<CustomerType>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Customer Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+          {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+          {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
         </Button>
-      )
+      );
     },
   },
   {
@@ -44,12 +61,15 @@ const columns: ColumnDef<CustomerType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-         Code
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          Code
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+          {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+          {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
         </Button>
-      )
+      );
     },
-  }, {
+  },
+  {
     accessorKey: "Address",
     header: ({ column }) => {
       return (
@@ -58,11 +78,14 @@ const columns: ColumnDef<CustomerType>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Address
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+          {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+          {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
         </Button>
-      )
+      );
     },
-  },{
+  },
+  {
     accessorKey: "GST",
     header: ({ column }) => {
       return (
@@ -70,12 +93,15 @@ const columns: ColumnDef<CustomerType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          GST
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          GST Number
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+          {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+          {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
         </Button>
-      )
+      );
     },
-  },{
+  },
+  {
     accessorKey: "PaymentTerms",
     header: ({ column }) => {
       return (
@@ -83,13 +109,15 @@ const columns: ColumnDef<CustomerType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          payment Terms
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          Payment Terms
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+          {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+          {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
         </Button>
-      )
+      );
     },
-  }
-]
+  },
+];
 
 export default function CustomersList() {
   const [customerData, setCustomerData] = useState<CustomerType[]>([]);
@@ -117,29 +145,7 @@ export default function CustomersList() {
           Customers List
         </h3>
       )}
-<DataTableDemo data={customerData} columns={columns}/>
-      {/* <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Customer Name</TableHead>
-            <TableHead>Customer Code</TableHead>
-            <TableHead>Customer Address</TableHead>
-            <TableHead>GST Number</TableHead>
-            <TableHead>Payment Terms</TableHead>
-          </TableRow>
-        </TableHeader>
-          <TableBody>
-        {customerData.map((customer) => (
-            <TableRow>
-              <TableCell className="font-medium">{customer.CustomerName}</TableCell>
-              <TableCell><span className="ml-8" /> {customer.Code}</TableCell>
-              <TableCell>{customer.Address}</TableCell>
-              <TableCell><span className="ml-8" /> {customer.GST}</TableCell>
-              <TableCell>{customer.PaymentTerms}</TableCell>
-            </TableRow>
-        ))}
-        </TableBody>
-      </Table> */}
+      <DataTableDemo data={customerData} columns={columns} filterName="CustomerName"/>
     </div>
   );
 }

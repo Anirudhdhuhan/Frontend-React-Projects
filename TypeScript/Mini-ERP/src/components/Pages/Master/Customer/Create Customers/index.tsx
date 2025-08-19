@@ -6,7 +6,7 @@ type CustomerType = {
   CustomerName: string;
   Code: string;
   Address: string;
-  GST: number;
+  GST: string;
   PaymentTerms: string;
 };
 
@@ -16,9 +16,14 @@ export default function CreateCustomerPage() {
     CustomerName: "",
     Code: "",
     Address: "",
-    GST: 0,
+    GST: "",
     PaymentTerms: "",
   });
+
+  function isValidGSTNo(gst: string) {
+    const regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+    return regex.test(gst);
+  }
 
   function HandleCustomerTypedFields(key: string, value: string | number) {
     setTypeCustomerDetails({ ...typeCustomerDetails, [key]: value });
@@ -29,21 +34,25 @@ export default function CreateCustomerPage() {
       typeCustomerDetails.Address != "" &&
       typeCustomerDetails.Code != "" &&
       typeCustomerDetails.CustomerName != "" &&
-      typeCustomerDetails.GST != 0 &&
+      typeCustomerDetails.GST != "" &&
       typeCustomerDetails.PaymentTerms
-    ) 
-    {
-      const stored = localStorage.getItem("Customers");
-      const storedItems: CustomerType[] = stored ? JSON.parse(stored) : [];
-      storedItems.push(typeCustomerDetails);
-      localStorage.setItem("Customers", JSON.stringify(storedItems));
-      setTypeCustomerDetails({
-        CustomerName: "",
-        Code: "",
-        Address: "",
-        GST: 0,
-        PaymentTerms: "",
-      });
+    ) {
+      if (isValidGSTNo(typeCustomerDetails.GST)) {
+        const stored = localStorage.getItem("Customers");
+        const storedItems: CustomerType[] = stored ? JSON.parse(stored) : [];
+        storedItems.push(typeCustomerDetails);
+        localStorage.setItem("Customers", JSON.stringify(storedItems));
+        setTypeCustomerDetails({
+          CustomerName: "",
+          Code: "",
+          Address: "",
+          GST: "",
+          PaymentTerms: "",
+        });
+        alert("Customer created Successfully");
+      } else {
+        alert("Wrong GST Input");
+      }
     }
   }
 
@@ -108,7 +117,7 @@ export default function CreateCustomerPage() {
           <div>
             GST No:-{" "}
             <input
-              type="number"
+              type="text"
               value={typeCustomerDetails.GST}
               className="m-2 mr-9 border-2 rounded pl-1"
               onChange={(e) => {

@@ -48,7 +48,7 @@ setTypedServicesData({
   StockNo: 0,
   GST: 0,
 })
-console.log("Items in Local Storage from Service code", storedItems);
+alert("Service created Successfully");
   }
 
   return (

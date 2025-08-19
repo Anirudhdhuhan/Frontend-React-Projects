@@ -1,4 +1,6 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import * as React from "react";
 import {
   flexRender,
@@ -28,9 +30,10 @@ import {
 type props<T> = {
   data: T[];
   columns: ColumnDef<T>[];
+  filterName:  string;
 };
 
-export function DataTableDemo<T>({ data, columns }: props<T>) {
+export function DataTableDemo<T>({ data, columns, filterName }: props<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -56,33 +59,34 @@ export function DataTableDemo<T>({ data, columns }: props<T>) {
       columnVisibility,
       rowSelection,
     },
-    // initialState: {
-    //   pagination: {
-    //     pageSize: 2,
-    //   },
-    // },
+    initialState: {
+      pagination: {
+        pageSize: 2,
+      },
+    },
   });
 
   return (
     <div className="w-full">
-      {/* <div className="flex items-center py-4">
+      <div>
+      <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder={`Filter ${filterName} ...`}
+          value={(table.getColumn(filterName)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn(filterName)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
-      </div> */}
+      </div>
       <div className="overflow-hidden rounded-md border">
-        <Table>
+        <Table className="w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead   key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -103,7 +107,7 @@ export function DataTableDemo<T>({ data, columns }: props<T>) {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell className="px-5"  key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -124,7 +128,30 @@ export function DataTableDemo<T>({ data, columns }: props<T>) {
             )}
           </TableBody>
         </Table>
+        </div>
+        <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
       </div>
+      </div>
+      <div className="text-muted-foreground flex-1 text-sm">
+  {table.getFilteredSelectedRowModel().rows.length} of{" "}
+  {table.getFilteredRowModel().rows.length} row(s) selected.
+</div>
     </div>
   );
 }

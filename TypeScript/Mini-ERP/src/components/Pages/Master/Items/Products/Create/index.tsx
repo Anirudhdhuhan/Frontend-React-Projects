@@ -45,6 +45,7 @@ function AddDatatoLocalStorage(){
     StockNo: 0,
     GST: 0,
   })
+  alert("Product created Successfully");
 }
 
   return (
