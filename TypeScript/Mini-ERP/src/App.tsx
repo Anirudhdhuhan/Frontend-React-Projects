@@ -14,7 +14,7 @@ function App() {
         </div>
 
         {/* Main content on the right */}
-        <main className="flex-1 overflow-auto p-4  bg-gray-400">
+        <main className="flex-1 overflow-auto p-4 ">
           <Outlet />
         </main>
       </div>
