@@ -29,14 +29,20 @@ export default function CreateCustomerPage() {
     setTypeCustomerDetails({ ...typeCustomerDetails, [key]: value });
   }
 
+  // function checkExistingCustomer(){
+
+  // }
+
   function AddcustomertolocalStorage() {
     if (
       typeCustomerDetails.Address != "" &&
       typeCustomerDetails.Code != "" &&
       typeCustomerDetails.CustomerName != "" &&
       typeCustomerDetails.GST != "" &&
-      typeCustomerDetails.PaymentTerms
+      typeCustomerDetails.PaymentTerms != ""
     ) {
+
+
       if (isValidGSTNo(typeCustomerDetails.GST)) {
         const stored = localStorage.getItem("Customers");
         const storedItems: CustomerType[] = stored ? JSON.parse(stored) : [];
@@ -53,6 +59,9 @@ export default function CreateCustomerPage() {
       } else {
         alert("Wrong GST Input");
       }
+
+
+      
     }
   }
 
@@ -65,11 +74,12 @@ export default function CreateCustomerPage() {
 
   return (
     <div>
-      <h1 className="text-7xl text-blue-500 bg-yellow-500 p-4 text-center rounded pt-1 mb-9">
-        This is Create Customer Page
-      </h1>
-      <div>
+      <p className="text-4xl font-serif text-white bg-gradient-to-r from-blue-700 to-purple-700  p-2 text-center rounded-lg mb-4">
+        Create Customers
+      </p>
+      <div className="w-full">
         <Button
+          className="w-1/10 ml-4"
           onClick={() => {
             navigate(-1);
           }}
@@ -77,13 +87,13 @@ export default function CreateCustomerPage() {
           Back
         </Button>
       </div>
-      <div className="mt-6">
-        <div className="flex">
+      <div className="mt-6 mx-auto w-3/4 ">
+        <div className="flex flex-wrap gap-y-3 border rounded-xl shadow shadow-cyan-200 px-3 py-3 justify-between">
           <div>
             <label>Customer Name:-</label>
             <input
               type="text"
-              className="m-2 mr-9 border-2 rounded pl-1"
+              className=" border rounded pl-1"
               value={typeCustomerDetails.CustomerName}
               onChange={(e) => {
                 HandleCustomerTypedFields("CustomerName", e.target.value);
@@ -94,7 +104,7 @@ export default function CreateCustomerPage() {
             <label>Code:-</label>{" "}
             <input
               type="text"
-              className="m-2 mr-9 border-2 rounded pl-1"
+              className=" border rounded pl-1"
               value={typeCustomerDetails.Code}
               onChange={(e) => {
                 HandleCustomerTypedFields("Code", e.target.value);
@@ -102,59 +112,58 @@ export default function CreateCustomerPage() {
             />
           </div>
           <div>
-            <label className="mr-1">Address:- </label>
+            <label>GST No:-</label>
+            <input
+              type="text"
+              value={typeCustomerDetails.GST}
+              className="border rounded pl-1"
+              onChange={(e) => {
+                HandleCustomerTypedFields("GST", e.target.value);
+              }}
+            />
+          </div>
+          <div>
+            <label>Address:- </label>
             <textarea
-              className=" mr-9 border-2 rounded pl-1"
+              className="border rounded pl-1"
               value={typeCustomerDetails.Address}
               onChange={(e) => {
                 HandleCustomerTypedFields("Address", e.target.value);
               }}
             />
           </div>
-        </div>
-        <br /> <br />
-        <div className="flex">
-          <div>
-            GST No:-{" "}
-            <input
-              type="text"
-              value={typeCustomerDetails.GST}
-              className="m-2 mr-9 border-2 rounded pl-1"
-              onChange={(e) => {
-                HandleCustomerTypedFields("GST", e.target.value);
-              }}
-            />
-          </div>
 
           <div>
-            <label className="mr-1">Payment Terms:- </label>
+            <label>Payment Terms:- </label>
             <textarea
-              className=" border-2 rounded pl-1 "
+              className=" border rounded pl-1 "
               value={typeCustomerDetails.PaymentTerms}
               onChange={(e) => {
                 HandleCustomerTypedFields("PaymentTerms", e.target.value);
               }}
             />
           </div>
-        </div>{" "}
-        <br />
-        <Button onClick={AddcustomertolocalStorage}>Create Customer</Button>
-        <Button
-          className="ml-4"
-          onClick={() => {
-            ShowonConsole();
-          }}
-        >
-          Show Customer on Console
-        </Button>
-        <Button
-          className="ml-4 bg-red-700"
-          onClick={() => {
-            localStorage.clear();
-          }}
-        >
-          Delete All
-        </Button>
+        </div>
+        
+        <div className="flex gap-4 mt-5">
+          <Button
+            className="flex-1 bg-blue-800 hover:bg-blue-900"
+            onClick={AddcustomertolocalStorage}
+          >
+            Create Customer
+          </Button>
+          <Button className="flex-1" onClick={ShowonConsole}>
+            Show Customer on Console
+          </Button>
+          <Button
+            className="flex-1 bg-red-700"
+            onClick={() => {
+              localStorage.clear();
+            }}
+          >
+            Delete All
+          </Button>
+        </div>
       </div>
     </div>
   );

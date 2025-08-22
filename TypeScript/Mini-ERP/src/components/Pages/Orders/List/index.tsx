@@ -85,6 +85,27 @@ export default function OrdersList() {
       },
     },
     {
+      accessorKey: "ItemsDetail",
+      header: "Items",
+      cell: ({ row }) => (
+        <div>
+        {row.original.ItemsDetail.length}
+      </div>
+        // <div className="space-y-2">
+        //   {row.original.ItemsDetail.map((item, index) => (
+        //     <div key={index} className="border-b pb-1">
+        //       <p>Item: {item.Item}</p>
+        //       <p>Quantity: {item.Quantity}</p>
+        //       <p>GST: {item.GSTOnItem}%</p>
+        //       <p>Total: {item.AmountafterGST}</p>
+        //     </div>
+        //   )
+        //   )}
+        // </div>
+      )
+    },
+    
+    {
       accessorKey: "DeliveryDate",
       header: ({ column }) => {
         return (
@@ -239,14 +260,9 @@ export default function OrdersList() {
     // </div>
 
     <div>
-      <p className="text-7xl text-blue-500 bg-yellow-500 p-4 text-center rounded pt-1">
-        This is Orders Page
+      <p className="text-4xl font-serif text-white bg-gradient-to-r from-blue-700 to-purple-700  p-2 text-center rounded-lg mb-2">
+        Orders
       </p>
-      {orders?.length != 0 && (
-        <h3 className="text-4xl text-white bg-stone-700 py-3 rounded-3xl mt-5 mb-15 flex justify-center">
-          Orders List
-        </h3>
-      )}
       <DataTableDemo data={orders} columns={columns} filterName="Customer" />
     </div>
   );

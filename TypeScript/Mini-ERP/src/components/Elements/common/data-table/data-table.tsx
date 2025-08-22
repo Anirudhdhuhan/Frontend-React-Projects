@@ -78,10 +78,10 @@ export function DataTableDemo<T>({ data, columns, filterName }: props<T>) {
             onChange={(event) =>
               table.getColumn(filterName)?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="max-w-sm shadow"
           />
         </div>
-        <div className="overflow-hidden rounded-md border">
+        <div className="overflow-hidden rounded-md border shadow shadow-blue-200">
           <Table className="w-full">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (

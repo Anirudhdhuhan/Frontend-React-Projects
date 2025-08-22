@@ -132,19 +132,19 @@ export default function CustomersList() {
   console.log("Customer list", customerData);
   return (
     <div>
-      <p className="text-7xl text-blue-500 bg-yellow-500 p-4 text-center rounded pt-1">
-        This is Customer List Page
+      <p className="text-4xl font-serif text-white bg-gradient-to-r from-blue-700 to-purple-700  p-2 text-center rounded-lg  ">
+      Customers List
       </p>
       <div className="mt-8">
-        <Link to={"/Customer/Create"}>
-          <Button>Create</Button>
+        <Link to={"/Customer/Create"} >
+          <Button>Create new Customer</Button>
         </Link>
       </div>
-      {customerData.length != 0 && (
+      {/* {customerData.length != 0 && (
         <h3 className="text-4xl text-white bg-stone-700 py-3 rounded-3xl mt-5 mb-15 flex justify-center">
           Customers List
         </h3>
-      )}
+      )} */}
       <DataTableDemo data={customerData} columns={columns} filterName="CustomerName"/>
     </div>
   );

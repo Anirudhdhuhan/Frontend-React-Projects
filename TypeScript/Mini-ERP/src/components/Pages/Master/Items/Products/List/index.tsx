@@ -184,18 +184,18 @@ useEffect(getProductsData,[])
 
   return (
     <div>
-      <p className="text-7xl text-blue-500 bg-yellow-500 p-4 text-center rounded pt-1">
-        This is Products List Page
+      <p className="text-4xl font-serif text-white bg-gradient-to-r from-blue-700 to-purple-700 p-2 text-center rounded-lg mb-4">
+         Products
       </p>
       <div className="mt-8">
         <Link to={"/Products/Create"}>
-          <Button>Create</Button>
+          <Button>Create new Product</Button>
         </Link>
-        {productsData.length != 0 && (
+        {/* {productsData.length != 0 && (
           <h3 className="text-4xl text-white bg-stone-700 py-3 rounded-3xl mt-5 mb-15 flex justify-center">
             Products List
           </h3>
-        )}
+        )} */}
 {/* 
         {productsData.map(product => ( <div className="mb-6 flex gap-6 border border-black py-3 px-5 w-fit rounded">
             <div>Product:- {product.Product}</div>

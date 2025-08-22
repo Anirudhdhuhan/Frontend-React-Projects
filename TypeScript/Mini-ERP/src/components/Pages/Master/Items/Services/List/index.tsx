@@ -176,18 +176,18 @@ export default function ServicesList() {
 
   return (
     <div>
-      <p className="text-7xl text-blue-500 bg-yellow-500 p-4 text-center rounded pt-1">
-        This is Services List Page
+      <p className="text-4xl font-serif text-white bg-gradient-to-r from-blue-700 to-purple-700  p-2 text-center rounded-lg  ">
+      Services
       </p>
       <div className="mt-8">
         <Link to={"/Services/Create"}>
-          <Button>Create</Button>
+          <Button>Create new Service</Button>
         </Link>
-        {serviceData.length != 0 && (
+        {/* {serviceData.length != 0 && (
           <h3 className="text-4xl text-white bg-stone-700 py-3 rounded-3xl mt-5 mb-15 flex justify-center">
             Services List
           </h3>
-        )}
+        )} */}
         {/* {serviceData.map((service) => (
         <div className="mb-6 flex gap-6 border border-black py-3 px-5 w-fit rounded">
             <div>Service:- {service.Service}</div>
