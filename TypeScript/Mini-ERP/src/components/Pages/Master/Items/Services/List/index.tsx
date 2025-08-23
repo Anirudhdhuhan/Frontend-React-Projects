@@ -15,6 +15,7 @@ type ServiceType = {
   Description: string;
   StockNo: number;
   GST: number;
+  Code: string
 };
 
 const columns : ColumnDef<ServiceType>[] = [
@@ -56,6 +57,17 @@ header: ({ column }) => {
   )
 },
 }, {
+  accessorKey: "Code",
+  header: ({column}) => {
+    return (
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} >Service Code
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+    {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+    {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}</Button>
+    )
+  },
+},
+{
   accessorKey: "ID",
   header: ({ column }) => {
     return (
@@ -124,21 +136,6 @@ header: ({ column }) => {
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
         Description
-        {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
-      {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
-      {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
-      </Button>
-    )
-  },
-}, {
-  accessorKey: "StockNo",
-  header: ({ column }) => {
-    return (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Stock Number
         {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
       {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
       {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}

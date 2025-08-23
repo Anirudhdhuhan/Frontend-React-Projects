@@ -4,25 +4,24 @@ import { useNavigate } from "react-router";
 
 type ServiceType = {
   Service: string;
-  ID: string;
+  ID?: string;
   Price: number;
   Quantity: number;
   HSNCode: string;
   Description: string;
-  StockNo: number;
   GST: number;
+  Sequence? : number;
+  Code?: string
 };
 
 export default function CreateServicesPage() {
   const navigate = useNavigate();
   const [typedServicesData, setTypedServicesData] = useState<ServiceType>({
     Service: "",
-    ID: "",
     Price: 0,
     Quantity: 0,
     HSNCode: "",
     Description: "",
-    StockNo: 0,
     GST: 0,
   });
 
@@ -33,22 +32,32 @@ export default function CreateServicesPage() {
   }
 
   function AddtolocalStorage() {
-    console.log("Created Service");
+    if(
+      typedServicesData.Service != "" && typedServicesData.Price != 0 && typedServicesData.Quantity != 0 && typedServicesData.HSNCode != "" && typedServicesData.Description != ""
+    ){
     const stored = localStorage.getItem("Services");
     const storedItems: ServiceType[] = stored ? JSON.parse(stored) : [];
-    storedItems.push(typedServicesData);
-    localStorage.setItem("Services", JSON.stringify(storedItems));
+    let sequence = 0;
+    const last = storedItems[storedItems.length -1];
+    if(last){
+      sequence = last.Sequence as number;
+    }
+    sequence = sequence + 1;
+    const newobj: ServiceType = {...typedServicesData, ID: Date.now().toString(), Sequence: sequence, Code: "SER" + sequence}
+    const updatedArray = [...storedItems, newobj];
+    localStorage.setItem("Services", JSON.stringify(updatedArray));
     setTypedServicesData({
       Service: "",
-      ID: "",
       Price: 0,
       Quantity: 0,
       HSNCode: "",
       Description: "",
-      StockNo: 0,
       GST: 0,
     });
     alert("Service created Successfully");
+  } else {
+    alert("Input All Fields");
+  }
   }
 
   return (
@@ -79,19 +88,6 @@ export default function CreateServicesPage() {
                   HandleTypedServices("Service", e.target.value);
                 }}
               />
-            </div>
-          </div>
-          <div className="flex">
-            <div> ID:- </div>
-            <div>
-              <input
-                type="text"
-                value={typedServicesData.ID}
-                className=" border rounded pl-1"
-                onChange={(e) => {
-                  HandleTypedServices("ID", e.target.value);
-                }}
-              />{" "}
             </div>
           </div>
           <div className="flex">
@@ -149,19 +145,6 @@ export default function CreateServicesPage() {
             </div>{" "}
           </div>
           <div className="flex">
-            <div> Stock Number:- </div>
-            <div>
-              <input
-                type="number"
-                value={typedServicesData.StockNo}
-                className=" border rounded pl-1"
-                onChange={(e) => {
-                  HandleTypedServices("StockNo", e.target.value);
-                }}
-              />{" "}
-            </div>
-          </div>
-          <div className="flex">
             <div>Select GST%</div>
             <div>
               <select
@@ -187,6 +170,7 @@ export default function CreateServicesPage() {
         >
           Create Service
         </Button>
+        <Button onClick={()=>{localStorage.removeItem("Services")}}>Delete Services</Button>
       </div>
     </div>
   );

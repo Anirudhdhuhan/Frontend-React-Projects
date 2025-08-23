@@ -28,6 +28,9 @@ export default function CreateOrder() {
     PaymentTerms: string;
     OrderValuebeforeGST: number;
     OrderValueafterGST: number;
+    Sequence?: number;
+    Code?: string;
+    ID?: string;
   };
 
   type ProductType = {
@@ -122,7 +125,6 @@ export default function CreateOrder() {
     typedOrders.ItemType,
     itemDetail.Item,
     itemDetail.Quantity,
-    itemDetail.ItemPrice,
   ]);
 
   function HandleOrderValues() {
@@ -165,19 +167,27 @@ export default function CreateOrder() {
   }
 
   function AddItems() {
-    setTypedOrders({
-      ...typedOrders,
-      ItemsDetail: [...typedOrders.ItemsDetail, itemDetail],
-    });
-    setItemDetail({
-      Item: "",
-      ItemPrice: 0,
-      Quantity: 0,
-      AmountbeforeGST: 0,
-      GSTOnItem: 0,
-      GSTAmount: 0,
-      AmountafterGST: 0,
-    });
+    if (
+      (itemDetail.Quantity != 0,
+      itemDetail.ItemPrice != 0,
+      itemDetail.Item != "")
+    ) {
+      setTypedOrders({
+        ...typedOrders,
+        ItemsDetail: [...typedOrders.ItemsDetail, itemDetail],
+      });
+      setItemDetail({
+        Item: "",
+        ItemPrice: 0,
+        Quantity: 0,
+        AmountbeforeGST: 0,
+        GSTOnItem: 0,
+        GSTAmount: 0,
+        AmountafterGST: 0,
+      });
+    } else {
+      alert("Fill all inputs");
+    }
   }
 
   function handleItemsDetail(key: string, value: string | number) {
@@ -203,23 +213,35 @@ export default function CreateOrder() {
   useEffect(handleAddress, [typedOrders.Customer]);
 
   function AddOrderstoLocalStorage() {
-    if(
-      typedOrders.Address != "",
-      typedOrders.Customer != "",
-      typedOrders.DeliveryDate != "",
-      typedOrders.ItemType !="",
-      itemDetail.AmountafterGST != 0,
-      itemDetail.AmountbeforeGST != 0,
-      itemDetail.GSTAmount != 0,
-      itemDetail.Item != "",
-      itemDetail.ItemPrice != 0,
-      itemDetail.Quantity != 0,
+    if (
+      typedOrders.Address != "" &&
+      typedOrders.Customer != "" &&
+      typedOrders.DeliveryDate != "" &&
+      typedOrders.ItemType != "" &&
+      itemDetail.AmountafterGST != 0 &&
+      itemDetail.AmountbeforeGST != 0 &&
+      itemDetail.GSTAmount != 0 &&
+      itemDetail.Item != "" &&
+      itemDetail.ItemPrice != 0 &&
+      itemDetail.Quantity != 0 &&
       typedOrders.PaymentTerms != ""
-    ){
+    ) {
       const stored = localStorage.getItem("Orders");
       const storedItems: OrderType[] = stored ? JSON.parse(stored) : [];
-      storedItems.push(typedOrders);
-      localStorage.setItem("Orders", JSON.stringify(storedItems));
+      let seq = 0;
+      const last = storedItems[storedItems.length - 1];
+      if (last) {
+        seq = last.Sequence as number;
+      }
+      seq = seq + 1;
+      const newObj: OrderType = {
+        ...typedOrders,
+        Code: "SO" + seq,
+        ID: Date.now().toLocaleString(),
+        Sequence: seq,
+      };
+      const updatedArr = [...storedItems, newObj];
+      localStorage.setItem("Orders", JSON.stringify(updatedArr));
       setTypedOrders({
         Customer: "",
         Address: "",
@@ -238,7 +260,9 @@ export default function CreateOrder() {
         GSTOnItem: 0,
         GSTAmount: 0,
         AmountafterGST: 0,
-      })
+      });
+    } else {
+      alert("No inputs should be blank");
     }
   }
 
@@ -335,10 +359,10 @@ export default function CreateOrder() {
                 <input
                   type="number"
                   value={itemDetail.ItemPrice}
+                  className="border pl-1 rounded ml-1"
                   onChange={(e) => {
                     handleItemsDetail("ItemPrice", e.target.value);
                   }}
-                  className="border pl-1 rounded ml-1"
                 />
               </div>
               <div>
@@ -352,6 +376,17 @@ export default function CreateOrder() {
                   }}
                 />
               </div>
+              <div className="flex gap-1">
+                <div>GST% on the item:-</div>
+                <div>
+                  <input
+                    type="number"
+                    value={itemDetail.GSTOnItem}
+                    onChange={(e)=>{handleItemsDetail("GSTOnItem", e.target.value)}}
+                    className="border pl-1 rounded ml-1"
+                  />
+                </div>
+              </div>
               <div>
                 Total Amount Before GST:-{" "}
                 <input
@@ -360,17 +395,6 @@ export default function CreateOrder() {
                   disabled
                   className="border pl-1 rounded disabled:bg-gray-100 ml-1"
                 />
-              </div>
-              <div className="flex gap-1">
-                <div>GST% on the item:-</div>
-                <div>
-                  <input
-                    type="number"
-                    value={itemDetail.GSTOnItem}
-                    disabled
-                    className="border pl-1 rounded disabled:bg-gray-100 ml-1"
-                  />
-                </div>
               </div>
               <div>
                 GST Amount:-
@@ -413,7 +437,7 @@ export default function CreateOrder() {
             ))}
 
           <div className="flex justify-between ">
-           <div>
+            <div>
               Delivery Date:- <span className="mr-1"></span>
               <input
                 type="date"
@@ -473,6 +497,13 @@ export default function CreateOrder() {
             onClick={AddOrderstoLocalStorage}
           >
             Create Order
+          </Button>
+          <Button
+            onClick={() => {
+              localStorage.removeItem("Orders");
+            }}
+          >
+            delete
           </Button>
         </div>
       </div>

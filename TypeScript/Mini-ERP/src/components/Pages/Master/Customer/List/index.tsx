@@ -61,7 +61,7 @@ const columns: ColumnDef<CustomerType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Code
+        Customer  Code
           {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
           {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
           {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}

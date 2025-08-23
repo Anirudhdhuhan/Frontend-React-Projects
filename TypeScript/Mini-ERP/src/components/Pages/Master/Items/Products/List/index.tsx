@@ -15,6 +15,7 @@ type ProductType = {
   Description: string;
   StockNo: number;
   GST: number;
+  Code: string
 };
 
 
@@ -50,6 +51,21 @@ type ProductType = {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Product
+          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
+        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
+        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
+        </Button>
+      )
+    },
+  },{
+    accessorKey: "Code",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+        Product Code
           {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
         {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
         {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
@@ -138,22 +154,6 @@ type ProductType = {
     },
   },
   {
-    accessorKey: "StockNo",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          StockNo
-          {column.getIsSorted() === "asc" && <ArrowUp className="w-4 h-4" />}
-        {column.getIsSorted() === "desc" && <ArrowDown className="w-4 h-4" />}
-        {!column.getIsSorted() && <ArrowUpDown className="w-4 h-4" />}
-        </Button>
-      )
-    },
-  },
-  {
     accessorKey: "GST",
     header: ({ column }) => {
       return (
@@ -213,6 +213,8 @@ useEffect(getProductsData,[])
       <DataTableDemo columns={columns} data={productsData} filterName="Product"/>
 
       </div>
+      <div className="mt-5"><Button onClick={()=>{localStorage.removeItem("Products")}}>delete products</Button></div>
+
     </div>
   );
 }

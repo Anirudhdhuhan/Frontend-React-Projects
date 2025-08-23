@@ -4,25 +4,25 @@ import { useNavigate } from "react-router";
 
 type ProductType = {
   Product: string;
-  ID: string;
+  ID?: string;
+  Code?: string;
   Price: number;
   Quantity: number;
   HSNCode: string;
   Description: string;
-  StockNo: number;
   GST: number;
+  Sequence?: number;
 };
 
 export default function CreateProductsPage() {
   const navigate = useNavigate();
+
   const [typedItems, setTypedItems] = useState<ProductType>({
     Product: "",
-    ID: "",
     Price: 0,
     Quantity: 0,
     HSNCode: "",
     Description: "",
-    StockNo: 0,
     GST: 0,
   });
   console.log("typed products", typedItems);
@@ -31,26 +31,47 @@ export default function CreateProductsPage() {
   }
 
   function AddDatatoLocalStorage() {
+
+if(typedItems.Product != "" && typedItems.Price !=0 && typedItems.Quantity != 0 && typedItems.HSNCode !="" && typedItems.Description !=""){
+
+
+
+    //fetching from local storage
     const stored = localStorage.getItem("Products");
     const storedItems: ProductType[] = stored ? JSON.parse(stored) : [];
-    storedItems.push(typedItems);
-    localStorage.setItem("Products", JSON.stringify(storedItems));
+    let sequenceNumber = 0;
+    const lastItem = storedItems[storedItems.length - 1];
+    if (lastItem) {
+      sequenceNumber = lastItem.Sequence as number;
+    }
+    sequenceNumber = sequenceNumber + 1;
+    const newObj: ProductType = {
+      ...typedItems,
+      Sequence: sequenceNumber,
+      Code: "PR" + sequenceNumber,
+      ID: Date.now().toString(),
+    };
+    const updatedArr = [...storedItems, newObj];
+    localStorage.setItem("Products", JSON.stringify(updatedArr));
     setTypedItems({
       Product: "",
-      ID: "",
       Price: 0,
       Quantity: 0,
       HSNCode: "",
       Description: "",
-      StockNo: 0,
       GST: 0,
     });
     alert("Product created Successfully");
+
+  } else {
+    alert("Input all Fields")
+  }
+
   }
 
   return (
     <div>
-      <p className="text-4xl font-serif text-white bg-gradient-to-r from-blue-700 to-purple-700  p-2 text-center rounded-lg mb-4">
+      <p className="text-4xl font-serif text-white bg-gradient-to-r from-blue-700 to-purple-700 p-2 text-center rounded-lg mb-4">
         Create Product
       </p>
       <div className="w-full">
@@ -74,19 +95,6 @@ export default function CreateProductsPage() {
                 value={typedItems.Product}
                 onChange={(e) => {
                   HandleTypedProducts("Product", e.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="flex">
-            <div>ID:-</div>
-            <div>
-              <input
-                type="text"
-                className="border rounded pl-1"
-                value={typedItems.ID}
-                onChange={(e) => {
-                  HandleTypedProducts("ID", e.target.value);
                 }}
               />
             </div>
@@ -144,19 +152,6 @@ export default function CreateProductsPage() {
             </div>
           </div>
           <div className="flex">
-            <div>Stock Number:- </div>
-            <div>
-              <input
-                type="number"
-                className="border rounded pl-1"
-                value={typedItems.StockNo}
-                onChange={(e) => {
-                  HandleTypedProducts("StockNo", e.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="flex">
             <div>GST%</div>
             <div>
               <select
@@ -177,7 +172,12 @@ export default function CreateProductsPage() {
           </div>
         </div>
         <div>
-          <Button className="bg-blue-800 hover:bg-blue-900 w-full" onClick={AddDatatoLocalStorage}>Create Product</Button>
+          <Button
+            className="bg-blue-800 hover:bg-blue-900 w-full"
+            onClick={AddDatatoLocalStorage}
+          >
+            Create Product
+          </Button>
         </div>
       </div>{" "}
     </div>

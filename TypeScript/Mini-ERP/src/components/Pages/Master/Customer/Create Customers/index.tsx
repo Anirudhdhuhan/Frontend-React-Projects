@@ -4,17 +4,18 @@ import { useNavigate } from "react-router";
 
 type CustomerType = {
   CustomerName: string;
-  Code: string;
+  Code?: string;
   Address: string;
   GST: string;
   PaymentTerms: string;
+  Sequence?: number;
+  ID?: string;
 };
 
 export default function CreateCustomerPage() {
   const navigate = useNavigate();
   const [typeCustomerDetails, setTypeCustomerDetails] = useState<CustomerType>({
     CustomerName: "",
-    Code: "",
     Address: "",
     GST: "",
     PaymentTerms: "",
@@ -36,21 +37,24 @@ export default function CreateCustomerPage() {
   function AddcustomertolocalStorage() {
     if (
       typeCustomerDetails.Address != "" &&
-      typeCustomerDetails.Code != "" &&
       typeCustomerDetails.CustomerName != "" &&
       typeCustomerDetails.GST != "" &&
       typeCustomerDetails.PaymentTerms != ""
     ) {
-
-
       if (isValidGSTNo(typeCustomerDetails.GST)) {
         const stored = localStorage.getItem("Customers");
         const storedItems: CustomerType[] = stored ? JSON.parse(stored) : [];
-        storedItems.push(typeCustomerDetails);
-        localStorage.setItem("Customers", JSON.stringify(storedItems));
+        let seq = 0;
+        const last = storedItems[storedItems.length - 1];
+        if (last) {
+          seq = last.Sequence as number;
+        }
+        seq = seq + 1;
+        const newobj: CustomerType = { ...typeCustomerDetails, ID: Date.now().toLocaleString(), Sequence: seq, Code: "CS" + seq };
+        const updatedArr = [...storedItems, newobj]
+        localStorage.setItem("Customers", JSON.stringify(updatedArr));
         setTypeCustomerDetails({
           CustomerName: "",
-          Code: "",
           Address: "",
           GST: "",
           PaymentTerms: "",
@@ -59,9 +63,8 @@ export default function CreateCustomerPage() {
       } else {
         alert("Wrong GST Input");
       }
-
-
-      
+    } else {
+      alert("Inputs must not be empty");
     }
   }
 
@@ -101,17 +104,6 @@ export default function CreateCustomerPage() {
             />
           </div>
           <div>
-            <label>Code:-</label>{" "}
-            <input
-              type="text"
-              className=" border rounded pl-1"
-              value={typeCustomerDetails.Code}
-              onChange={(e) => {
-                HandleCustomerTypedFields("Code", e.target.value);
-              }}
-            />
-          </div>
-          <div>
             <label>GST No:-</label>
             <input
               type="text"
@@ -144,7 +136,7 @@ export default function CreateCustomerPage() {
             />
           </div>
         </div>
-        
+
         <div className="flex gap-4 mt-5">
           <Button
             className="flex-1 bg-blue-800 hover:bg-blue-900"
@@ -162,6 +154,13 @@ export default function CreateCustomerPage() {
             }}
           >
             Delete All
+          </Button>
+          <Button
+            onClick={() => {
+              localStorage.removeItem("Customers");
+            }}
+          >
+            delete
           </Button>
         </div>
       </div>
